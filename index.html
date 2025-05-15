@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>R&S MART</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+    }
+    header {
+      background-color: #111;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .product h3 {
+      margin: 10px 0 5px;
+      font-size: 16px;
+    }
+    .product p {
+      font-size: 14px;
+      color: #555;
+    }
+    .product button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .product button:hover {
+      background-color: #218838;
+    }
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 1px solid #aaa;
+      border-radius: 10px;
+      z-index: 1000;
+      width: 90%;
+      max-width: 400px;
+    }
+    .form-popup input, .form-popup textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .form-popup button {
+      width: 100%;
+      padding: 10px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<header>R S MART</header>
+
+<div class="product-grid">
+  <!-- Product 1 -->
+  <div class="product">
+    <img src="WhatsApp Image 2025-05-14 at 7.58.41 PM (2).jpeg" alt="Jordan T-Shirt 1"/>
+    <h3>Jordan T-Shirt</h3>
+    <p>100% quality product and branded</p>
+    <p><strong>Price: ₹550</strong></p>
+    <button onclick="openForm('Jordan T-Shirt 1')">Buy</button>
+  </div>
+
+  <!-- Product 2 -->
+  <div class="product">
+    <img src="WhatsApp Image 2025-05-14 at 7.58.40 PM (1).jpeg" alt="Jordan T-Shirt 2"/>
+    <h3>Jordan T-Shirt</h3>
+    <p>100% quality product and branded</p>
+    <p><strong>Price: ₹550</strong></p>
+    <button onclick="openForm('Jordan T-Shirt 2')">Buy</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeForm()"></div>
+
+<div class="form-popup" id="orderForm">
+  <h3>Enter Your Details</h3>
+  <input type="text" id="custName" placeholder="Your Name" required />
+  <input type="tel" id="custPhone" placeholder="Phone Number" required />
+  <textarea id="custAddress" placeholder="Delivery Address" rows="3" required></textarea>
+  <input type="hidden" id="productName" />
+  <button onclick="sendToWhatsApp()">Submit Order via WhatsApp</button>
+</div>
+
+<script>
+  function openForm(productName) {
+    document.getElementById('productName').value = productName;
+    document.getElementById('orderForm').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  function closeForm() {
+    document.getElementById('orderForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  function sendToWhatsApp() {
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
+    const address = document.getElementById('custAddress').value;
+    const product = document.getElementById('productName').value;
+
+    if (!name || !phone || !address) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    const message = `New Order from R S MART:%0AProduct: ${product}%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}`;
+    const phoneNumber = '918278668390'; // Your WhatsApp number in international format
+
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+
+    closeForm();
+  }
+</script>
+
+</body>
+</html>
